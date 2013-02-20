@@ -34,6 +34,10 @@
       position: relative;
       padding: 8px 8px;
     }
+    .nav-bar > li > a.active {
+      background-color: white;
+      color: black;
+    }
     .nav-bar.vertical > li {
       line-height: 18px;
       word-break: break-all;
@@ -52,7 +56,7 @@
   <script type="text/x-handlebars" data-template-name="application">
     <div class="row">
       <div class="twelve columns">
-        <h1>some.com</h1>
+        <h1>Dashboard for emberjs.com</h1>
         <hr>
         {{ outlet }}
       </div>
@@ -77,12 +81,12 @@
   <script type="text/x-handlebars" data-template-name="pages">
     <div class="row">
       <div class="three columns">
-        <h2>Pages</h2>
+        <h4>Pages</h4>
         <ul class="nav-bar vertical" style="border-top: solid gray 9px;">
           {{#each page in controller}}
             <li>
               {{#linkTo 'page' page}}
-                {{page.id}}
+                {{urlAsId page.id}}
               {{/linkTo}}
             </li>
           {{/each}}
@@ -93,6 +97,24 @@
       </div>
     </div>
   </script>
+
+  <script type="text/x-handlebars" data-template-name="pages/index">
+    <h2>Select a page at left to view errors</h2>
+  </script>
+
+
+  <script type="text/x-handlebars" data-template-name="page">
+    <h4>Errors on {{urlAsId id}}</h4>
+    {{#each reports}}
+      <div>
+        Error: {{error}}
+        <br>
+        Logs:{{logs}}
+      </div>
+      <br>
+    {{/each}}
+  </script>
+
 
   <script src="components/jquery/jquery.js"></script>
   <script src="js/libs/handlebars.js"></script>

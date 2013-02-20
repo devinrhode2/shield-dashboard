@@ -3,7 +3,7 @@ window.App = Ember.Application.create();
 App.Router.map(function(){
   //this.route('domain', {path: ':domain'}, function(){
     this.resource('pages', function(){
-      this.resource('page', {path: ':id'});
+      this.resource('page', {path: ':page_id'});
     })
   //});
 });
@@ -41,6 +41,33 @@ App.PageRoute = Ember.Route.extend({
 });
 */
 
+// Handlebars Helpers
+Ember.Handlebars.registerBoundHelper('logStatement', function(log) {
+  console.log(arguments);
+  return log.join(' ');
+});
+
+Ember.Handlebars.registerBoundHelper('urlAsId', function(url) {
+  return decodeURIComponent(url);
+});
+
+Ember.Handlebars.registerBoundHelper('reportsHelper', function() {
+  console.log(arguments);
+  return 'flat';
+});
+
+Handlebars.registerHelper("debug", function(optionalValue) {
+  console.log("Current Context");
+  console.log("====================");
+  console.log(this);
+ 
+  if (optionalValue) {
+    console.log("Value");
+    console.log("====================");
+    console.log(optionalValue);
+  }
+});
+
 // Models
 App.Store = DS.Store.extend({
   revision: 11,
@@ -48,8 +75,7 @@ App.Store = DS.Store.extend({
 });
 
 App.Page = DS.Model.extend({
-  url: DS.attr('string')
-/* , reports: DS.hasMany('App.Report') */
+  reports: DS.hasMany('App.Report')
 });
 
 App.Report = DS.Model.extend({
@@ -58,11 +84,41 @@ App.Report = DS.Model.extend({
   logs: DS.attr('string')
 });
 
-App.Page.FIXTURES = [
-  {id: 'http://emberjs.com/guides/routing/defining-your-routes/'},
-  {id: 'http://emberjs.com/guides/getting-started/core-concepts/'},
-  {id: 'http://emberjs.com/'}
-];
+
+
+App.Page.FIXTURES = [{
+  id: 'http%3A%2F%2Femberjs.com%2Fguides%2Frouting%2Fsetting-up-a-controller%2F'
+, reports: [200]
+}, {
+  id: 'http%3A%2F%2Femberjs.com%2Fguides%2Fgetting-started%2Fcore-concepts%2F'
+, reports: [200, 300]
+}, {
+  id: 'http%3A%2F%2Femberjs.com%2F'
+, reports: [200, 300, 400]
+}];
+
+App.Report.FIXTURES = [{
+  id: 200,
+  error: 'boom',
+  logs: [
+    ['log', 'log'],
+    ['debug', 'debug']
+  ]
+}, {
+  id: 300,
+  error: 'bam',
+  logs: [
+    ['error', 'error'],
+    ['warn', 'warning']
+  ]
+}, {
+  id: 400,
+  error: 'bam',
+  logs: [
+    ['error', 'error'],
+    ['warn', 'warning']
+  ]
+}];
 
 /*
 domain.com: {
