@@ -23,10 +23,22 @@
       background: whitesmoke;
     }
     body {
+      text-align: center;
+      margin: auto;
       width: 980px;
       border-left: solid gray 1px;
       border-right: solid gray 1px;
       background: white;
+    }
+    .nav-bar > li > a:first-child {
+      position: relative;
+      padding: 8px 8px;
+    }
+    .nav-bar.vertical > li {
+      line-height: 18px;
+      word-break: break-all;
+      border: solid gray 9px;
+      border-top: none;
     }
   </style>
 </head>
@@ -64,15 +76,19 @@
 
   <script type="text/x-handlebars" data-template-name="pages">
     <div class="row">
-      <div class="two columns">
+      <div class="three columns">
         <h2>Pages</h2>
-        {{#each page in controller}}
-          {{#linkTo 'page' page class="row"}}
-            {{table.id}}
-          {{/linkTo}}
-        {{/each}}
+        <ul class="nav-bar vertical" style="border-top: solid gray 9px;">
+          {{#each page in controller}}
+            <li>
+              {{#linkTo 'page' page}}
+                {{page.id}}
+              {{/linkTo}}
+            </li>
+          {{/each}}
+        </ul>
       </div>
-      <div class="ten columns">
+      <div class="nine columns">
         {{ outlet }}
       </div>
     </div>

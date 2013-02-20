@@ -3,7 +3,7 @@ window.App = Ember.Application.create();
 App.Router.map(function(){
   //this.route('domain', {path: ':domain'}, function(){
     this.resource('pages', function(){
-      this.resource('page', {path: ':url'});
+      this.resource('page', {path: ':id'});
     })
   //});
 });
@@ -24,7 +24,6 @@ App.ApplicationRoute = Ember.Route.extend({
 
 App.PagesRoute = Ember.Route.extend({
   model: function() {
-    console.log(App.Page, App);
     return App.Page.find();
   }
 });
@@ -60,9 +59,9 @@ App.Report = DS.Model.extend({
 });
 
 App.Page.FIXTURES = [
-  {id: 'http%3A%2F%2Femberjs.com%2Fguides%2Frouting%2Fsetting-up-a-controller%2F'},
-  {id: 'http%3A%2F%2Flocalhost%3A3000%2F%23%2Fpages'},
-  {id: 'http%3A%2F%2Femberjs.com%2Fguides%2Frouting%2Fdefining-your-routes%2F'}
+  {id: 'http://emberjs.com/guides/routing/defining-your-routes/'},
+  {id: 'http://emberjs.com/guides/getting-started/core-concepts/'},
+  {id: 'http://emberjs.com/'}
 ];
 
 /*
